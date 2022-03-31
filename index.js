@@ -22,23 +22,27 @@ function myMap(collection, callback){
 
 function myReduce(collection, callback, acc){
     let newCollection = createArray(collection)
-    // if (!acc) {  
-    //     acc = newCollection[0];  
-    //     newCollection = newCollection -- newCollection[0]  
-    //   }
-    let total = collection.reduce(function(previousValue, currentValue) { 
-    return callback(previousValue, currentValue)
-})
+    if (!acc) {  
+        acc = newCollection[0];  
+        newCollection = newCollection.slice(1)
+      }
+    let newTotal = newCollection.length
+    for (let i=0; i < newTotal; i++) {
+        acc = callback(acc, newCollection[i], newCollection)
+    }
+    return acc
+    // let total = collection.reduce(function(previousValue, currentValue) { 
+    // return callback(previousValue, currentValue)
 }
 
-// next function works in replit, but not passig the test
 function myFind(collection, predicate){
     let newCollection = createArray(collection)
-    newCollection.find(element => {
-        if(predicate(element)){
-            return element;
-        }
-})}
+    for (let i =0; i<newCollection.length; i++){
+        if(predicate(newCollection[i])){
+            return newCollection[i]
+          } 
+    }
+}
 
 function myFilter(collection, predicate){
     let newCollection = createArray(collection)
